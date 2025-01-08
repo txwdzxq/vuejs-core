@@ -47,6 +47,7 @@ export interface DirectiveTransformResult {
   modifier?: '.' | '^'
   runtimeCamelize?: boolean
   handler?: boolean
+  handlerModifiers?: string[]
   model?: boolean
   modelModifiers?: string[]
 }
@@ -148,6 +149,8 @@ export class TransformContext<T extends AllNode = AllNode> {
     ) {
       return this.registerOperation(...operations)
     }
+
+    this.block.expressions.push(...expressions)
     const existing = this.block.effect.find(e =>
       isSameExpression(e.expressions, expressions),
     )
